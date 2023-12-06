@@ -40,10 +40,10 @@ jobs:
         folder_name="deploy_$timestamp"
 
         # Create a directory on the server
-        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} -p 22 "mkdir ~/web/$folder_name"
+        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.VPS_USERNAME }}@${{ secrets.REMOTE_HOST }} -p 22 "mkdir ~/web/$folder_name"
 
         # Copy build artifacts to the server
-        scp -r -P 22 -i ~/.ssh/id_rsa build/* ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:~/web/$folder_name
+        scp -r -P 22 -i ~/.ssh/id_rsa build/* ${{ secrets.VPS_USERNAME }}@${{ secrets.REMOTE_HOST }}:~/web/$folder_name
 
         # Enter the server directory and perform deployment steps
-        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} -p 22 "cd ~/web/$folder_name && git init && git remote add origin https://github.com/Lucas-Qrab/examDevops.git && git pull origin main && npm install && pm2 restart examDevops"
+        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.VPS_USERNAME }}@${{ secrets.REMOTE_HOST }} -p 22 "cd ~/web/$folder_name"
