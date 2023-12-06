@@ -22,4 +22,10 @@ Permet de lancer une procédure de test interractifs.
 
 Permet de build l'application pour la mise en production, l'application build ce trouve dans le dossier build accessible depuis la racine de l'application. 
 
+### containerisation 
 
+Le lancement de l'applicatio dans un container docker peut ce faire via un terminal en lançant la commande suivante :
+
+`docker-compose -f docker-compose.dev.yml up`
+
+mais n'est pas obligatoire

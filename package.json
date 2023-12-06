@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "examDevops",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -36,3 +36,4 @@
     ]
   }
 }
+
