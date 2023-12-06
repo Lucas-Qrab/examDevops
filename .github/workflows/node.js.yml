@@ -32,7 +32,7 @@ jobs:
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.REMOTE_HOST }}
-        username: ${{ secrets.VPS_Luca }}
+        username: ${{ secrets.VPS_USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         script: |
           cd /web
