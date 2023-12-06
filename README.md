@@ -1,6 +1,6 @@
-************************************
-Application react web documentation
-************************************
+***************************************************
+* Application react web documentation Lucas barq  *
+***************************************************
 
 ## Liste des commandes utilisables
 
