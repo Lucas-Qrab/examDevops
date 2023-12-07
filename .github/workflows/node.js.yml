@@ -41,7 +41,7 @@ jobs:
     # on lance le déploiement sur le server
     - name: Deploy to SSH Server
       run: |
-        timestamp=$(date +"%d-%m-%Y-%H+1-%M-%S")
+        timestamp=$(date +"%d-%m-%Y-%H-%M-%S" --date='+1 hour')
         folder_name="deploy_at_$timestamp"
 
         # on créer un dossier pour recevoir le deploiement 
