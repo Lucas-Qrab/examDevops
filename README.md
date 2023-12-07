@@ -2,6 +2,13 @@
 * Application react web documentation Lucas barq  *
 ***************************************************
 
+## Installation de l'application
+
+Pour installer l'application veuillez suivre ces étapes : 
+Commencez par ouvrir un terminal afin de cloner le projet sur votre machine
+Dans le terminal taper cette commande : git clone https://github.com/Lucas-Qrab/examDevops
+Une fois la commande éxecutée vous pouvez fermer le terminal. 
+
 ## Liste des commandes utilisables
 
 Premièrement afin d'utiliser l'application veuillez ouvrir un terminal et vous rendre dans le répertoire de l'application 
