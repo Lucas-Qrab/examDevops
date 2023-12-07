@@ -1,8 +1,7 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+# Ce workflow a pour but de deployer une version stable du projet sur un server via une connexion ssh
 
 name: Node.js CI
-
+# On detecte les push sur la branche main 
 on:
   push:
     branches: [ "main" ]
@@ -13,37 +12,40 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    # Adapter la version a votre version de node
     strategy:
       matrix:
         node-version: [18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
+        
     steps:
+    # On choisit le repo a deployer
     - uses: actions/checkout@v2
+    # on set up node
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+    # On ssetup la clé ssh 
     - name: Set up SSH key
       run: |
         mkdir -p ~/.ssh
         echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+    # on install node
     - run: npm ci
+    # on build l'application
     - run: npm run build --if-present
+    # on lance les tests 
     - run: npm test
+    # on lance le déploiement sur le server
     - name: Deploy to SSH Server
       run: |
         timestamp=$(date +"%Y%m%d%H%M%S")
         folder_name="deploy_$timestamp"
 
-        # Create a directory on the server
+        # on créer un dossier pour recevoir le deploiement 
         ssh -T -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.VPS_USERNAME }}@${{ secrets.REMOTE_HOST }} -p 22 "mkdir ~/web/$folder_name"
 
-        # Copy build artifacts to the server
-        scp -r -P 22 -i ~/.ssh/id_rsa build/* ${{ secrets.VPS_USERNAME }}@${{ secrets.REMOTE_HOST }}:~/web/$folder_name
-
-        # Enter the server directory and perform deployment steps
-        ssh -T -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.VPS_USERNAME }}@${{ secrets.REMOTE_HOST }} -p 22 "cd ~/web/$folder_name"
+        # on cpie les fichier dans le dossier 
+        scp -r -P 22 -i ~/.ssh/id_rsa build/* -o StrictHostKeyChecking=no ${{ secrets.VPS_USERNAME }}@${{ secrets.REMOTE_HOST }}:~/web/$folder_name
